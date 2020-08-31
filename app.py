@@ -18,6 +18,32 @@ def getClients():
 
     return Response(response, mimetype = 'application/json')
 
+@app.route('/client', methods = ['POST'])
+def createClient():
+    try:
+        client = {
+            "name": request.json['name'],
+            "nit": request.json['nit'],
+            "city": request.json['city'],
+            "phone": request.json['phone'],
+            "email": request.json['email']
+        }
+    except:
+        return {"done": False, "message": "Datos incorrectos para crear el cliente"}
+
+    if client['name'] and client['nit'] and client['email']:
+        client['id'] = mongo.db.clients.insert({
+            "name": client['name'],
+            "nit": client['nit'],
+            "city": client['city'],
+            "phone": client['phone'],
+            "email": client['email']
+        })
+    else:
+        return {"done": False, "message": "Datos incorrectos para crear el cliente"}
+
+    return {"done": True, "client": str(client['id'])}
+
 @app.route('/invoice', methods = ['POST'])
 def createInvoice():
     try:
