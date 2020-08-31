@@ -6,7 +6,7 @@ from bson import json_util, ObjectId
 from sendEmail import sendEmail
 
 app = Flask(__name__)
-app.config['MONGO_URI'] = 'mongodb://prueba:pass77--@ds211829.mlab.com:11829/clientes-facturas'
+app.config['MONGO_URI'] = 'mongodb://prueba:pass77--@ds211829.mlab.com:11829/clientes-facturas?retryWrites=false'
 CORS(app)
 
 mongo = PyMongo(app)
